@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simulador académico de costos de corto y largo plazo para CloudScale Inc.">
+  <title>TechCost | CloudScale Inc.</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#inicio">TechCost <small>BUSINESS SIMULATOR</small></a>
+    <p class="nav-title">ESPACIO DE TRABAJO</p>
+    <nav>
+      <button class="nav-btn active" data-page="inicio">⌂　Resumen general</button>
+      <button class="nav-btn" data-page="corto-plazo">▥　Costos de corto plazo</button>
+      <button class="nav-btn" data-page="largo-plazo">⇧　Costos de largo plazo</button>
+      <button class="nav-btn" data-page="tecnologia">⌘　Solución tecnológica</button>
+      <button class="nav-btn" data-page="metodologia">ⓘ　Metodología y datos</button>
+    </nav>
+    <div class="sidebar-foot">● Modelo académico<br>Economía General · 2026<br>CloudScale Inc.</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><span>CloudScale Inc. / <b id="breadcrumb">Resumen general</b></span><span>● Simulador listo</span></header>
+
+    <section class="page active" id="inicio">
+      <div class="page-heading"><div><span class="eyebrow">PANEL DE CONTROL · CLOUDSCALE INC.</span><h1>Optimización de costos TI</h1><p>Analiza la estructura de costos y compara alternativas de infraestructura.</p></div><span class="tag">MODELO MICROECONÓMICO</span></div>
+      <div class="hero"><span class="eyebrow">TECHCOST BUSINESS SIMULATOR</span><h2>Decisiones tecnológicas<br>basadas en costos.</h2><p>Evalúa la operación actual y compara alternativas de infraestructura para encontrar la escala más eficiente.</p><button class="primary" data-go="corto-plazo">Abrir simulador →</button></div>
+      <h2 class="section-title">Indicadores del caso</h2>
+      <div class="metrics">
+        <article class="metric"><span>Costo fijo total</span><strong>$12,000</strong><small>Infraestructura y licencias base</small></article>
+        <article class="metric"><span>Costo variable unitario</span><strong>$3,000</strong><small>Por unidad de trabajo (L)</small></article>
+        <article class="metric"><span>Menor CTM observado</span><strong>$385.71</strong><small>Q = 70 mil · L = 5</small></article>
+        <article class="metric"><span>Menor CMeLP</span><strong>$280</strong><small>Planta mediana · Kubernetes</small></article>
+      </div>
+      <div class="two-col">
+        <article class="panel"><h3>Hallazgo principal</h3><strong class="big-green">−30%</strong><b>Menor costo medio con la planta mediana</b><p>El costo medio de $280 es 30% inferior al de la planta pequeña ($400), según los valores del caso.</p><button class="secondary" data-go="largo-plazo">Comparar plantas →</button></article>
+        <article class="panel"><h3>Alcance del modelo</h3><p>Los resultados son estimaciones académicas construidas con los datos del caso CloudScale Inc. No representan cotizaciones reales de proveedores. Los valores intermedios de corto plazo se estiman mediante interpolación lineal.</p></article>
+      </div>
+    </section>
+
+    <section class="page" id="corto-plazo">
+      <div class="page-heading"><div><span class="eyebrow">MÓDULO 01 · INFRAESTRUCTURA FIJA</span><h1>Simulador de corto plazo</h1><p>Modifica el volumen y el precio para evaluar costos, ingresos y decisión de operación.</p></div><span class="tag">Q: MILES DE TRANSACCIONES</span></div>
+      <div class="two-col simulator-grid">
+        <article class="panel"><h3>Parámetros de simulación</h3>
+          <label for="q">Volumen de producción (Q) <small>Rango: 0 a 75 mil transacciones</small></label>
+          <div class="input-wrap"><input id="q" type="number" min="0" max="75" step="0.1" value="45"><span>mil</span></div>
+          <input id="q-range" class="range" type="range" min="0" max="75" step="0.1" value="45">
+          <div class="range-labels"><span>0 mil</span><span>75 mil</span></div>
+          <label for="price">Precio de mercado (P) <small>USD por cada mil transacciones</small></label>
+          <div class="input-wrap"><span>$</span><input id="price" type="number" min="0" step="0.01" value="500"><span>USD</span></div>
+          <div class="button-row"><button class="primary" id="calculate">Calcular resultados →</button><button class="secondary" id="reset">Restablecer</button></div>
+          <p class="note">El corto plazo solo se calcula para Q entre 0 y 75 mil. No se extrapolan costos fuera de ese intervalo.</p>
+        </article>
+        <article class="panel"><h3>Resultado de la operación</h3><p class="subtle">Indicadores calculados según los parámetros ingresados.</p><div id="results" aria-live="polite"></div></article>
+      </div>
+      <h2 class="section-title">Comportamiento de los costos</h2>
+      <div class="two-col">
+        <article class="panel"><h3>Costos medios</h3><p class="subtle">CFM, CVM y CTM según Q.</p><canvas id="average-chart" height="250"></canvas><div class="legend"><span>● CFM</span><span>● CVM</span><span>● CTM</span></div></article>
+        <article class="panel"><h3>Costo marginal</h3><p class="subtle">CMg por intervalo de producción.</p><canvas id="marginal-chart" height="250"></canvas><div class="legend"><span>● CMg</span></div></article>
+      </div>
+      <article class="panel"><h3>Tabla completa de datos del caso</h3><p class="subtle">Valores originales e indicadores calculados.</p><div class="table-scroll"><table><thead><tr><th>L</th><th>Q (miles)</th><th>CFT</th><th>CVT</th><th>CT</th><th>CFM</th><th>CVM</th><th>CTM</th><th>CMg</th><th>PMgL</th><th>PMeL</th></tr></thead><tbody id="data-table"></tbody></table></div><p class="note">CMg y PMgL corresponden al intervalo que termina en cada fila. Los costos medios no se definen para Q = 0.</p><button class="secondary" id="download-csv">Descargar tabla CSV</button></article>
+    </section>
+
+    <section class="page" id="largo-plazo">
+      <div class="page-heading"><div><span class="eyebrow">MÓDULO 02 · CAMBIO DE ESCALA</span><h1>Modelamiento de largo plazo</h1><p>Compara las tres alternativas y selecciona la de menor costo medio según el rango del caso.</p></div><span class="tag">COSTO MEDIO · USD / MIL</span></div>
+      <div class="two-col"><article class="panel"><h3>Evaluar volumen</h3><label for="long-q">Volumen de producción (Q)<small>En miles de transacciones</small></label><div class="input-wrap"><input id="long-q" type="number" min="0" value="60"><span>mil</span></div><input id="long-range" class="range" type="range" min="0" max="150" value="60"><div class="range-labels"><span>0 mil</span><span>150 mil</span></div></article><article class="panel" id="long-result"><h3>Recomendación de infraestructura</h3></article></div>
+      <h2 class="section-title">Comparación de alternativas</h2>
+      <div class="plant-grid">
+        <article class="plant"><span class="pill">0–menos de 40 mil</span><h3>Planta pequeña</h3><p>Monolito en VM dedicada</p><strong>$400</strong><small>USD por mil transacciones</small><p>Arquitectura centralizada para volúmenes reducidos.</p></article>
+        <article class="plant recommended"><span class="pill">40–90 mil</span><h3>Planta mediana</h3><p>Kubernetes / Microservicios</p><strong>$280</strong><small>USD por mil transacciones</small><p>Servicios independientes y escalabilidad flexible. Menor costo medio del caso.</p></article>
+        <article class="plant"><span class="pill">Más de 90 mil</span><h3>Planta grande</h3><p>Multi-Cloud Distributed Serverless</p><strong>$350</strong><small>USD por mil transacciones</small><p>Infraestructura distribuida con mayores costos de coordinación en el escenario.</p></article>
+      </div>
+      <article class="panel chart-panel"><h3>Curva conceptual de costo medio de largo plazo</h3><p class="subtle">Representación por tramos de las alternativas disponibles.</p><canvas id="long-chart" height="250"></canvas><p class="note">La información del caso proporciona tres rangos y tres costos medios; por ello, la curva es conceptual y no una función continua.</p></article>
+      <div class="notice"><b>Interpretación:</b> la planta mediana es la escala eficiente mínima entre las tres opciones, con un costo medio de $280. En Q = 40 se selecciona la mediana por su menor costo medio.</div>
+    </section>
+
+    <section class="page" id="tecnologia">
+      <div class="page-heading"><div><span class="eyebrow">MÓDULO 03 · PROPUESTA DE INGENIERÍA</span><h1>Solución tecnológica</h1><p>Arquitectura conceptual recomendada para responder al crecimiento de transacciones.</p></div><span class="tag">PLANTA MEDIANA</span></div>
+      <div class="tech-banner"><div><span class="pill">ARQUITECTURA RECOMENDADA</span><h2>Kubernetes +<br>Microservicios</h2><p>La alternativa mediana presenta el menor costo medio en los datos del caso. La arquitectura propuesta permite distribuir responsabilidades y ajustar recursos por servicio, siempre que su diseño y configuración sean adecuados.</p></div><div class="architecture">USUARIOS / CLIENTES<br>↓<br>API GATEWAY + BALANCEADOR<br>↓<br>[ SERVICIO A ]　[ SERVICIO B ]　[ SERVICIO C ]<br>↓<br>CLÚSTER KUBERNETES<br>↓<br>BASE DE DATOS · MONITOREO</div></div>
+      <h2 class="section-title">Componentes y funciones</h2>
+      <div class="component-grid"><article class="component"><b>01 · API Gateway</b><p>Recibe solicitudes y las dirige al servicio correspondiente.</p></article><article class="component"><b>02 · Balanceador</b><p>Distribuye el tráfico entre las instancias disponibles.</p></article><article class="component"><b>03 · Microservicios</b><p>Separan funciones de la aplicación en servicios independientes.</p></article><article class="component"><b>04 · Kubernetes</b><p>Orquesta contenedores y facilita administrar y escalar servicios.</p></article><article class="component"><b>05 · Base de datos</b><p>Almacena y gestiona la información de las transacciones.</p></article><article class="component"><b>06 · Monitoreo</b><p>Observa rendimiento, disponibilidad y consumo de recursos.</p></article></div>
+      <div class="two-col"><article class="panel"><h3>Justificación económica</h3><div class="formula"><span>Planta pequeña</span><b>$400</b></div><div class="formula"><span>Planta mediana</span><b>$280</b></div><div class="formula"><span>Planta grande</span><b>$350</b></div><p>La planta mediana tiene 30% menos costo medio que la pequeña y 20% menos que la grande.</p></article><article class="panel"><h3>Riesgos de implementación</h3><p>Complejidad de diseño, configuración y pruebas; planificación de migración y continuidad; seguridad y protección de datos; capacitación del equipo; monitoreo continuo y evaluación previa de costos de transición.</p></article></div>
+      <div class="notice"><b>Consideración:</b> Kubernetes y microservicios no son automáticamente más económicos en cualquier empresa. La ventaja económica aquí procede de los costos medios establecidos en el caso y no incluye costos reales de migración.</div>
+    </section>
+
+    <section class="page" id="metodologia">
+      <div class="page-heading"><div><span class="eyebrow">MÓDULO 04 · TRANSPARENCIA DEL MODELO</span><h1>Metodología y datos</h1><p>Supuestos, fórmulas y límites utilizados para que los resultados sean verificables.</p></div><span class="tag">DOCUMENTACIÓN</span></div>
+      <div class="two-col">
+        <article class="panel"><h3>Datos originales de corto plazo</h3><div class="table-scroll"><table><thead><tr><th>L</th><th>Q (miles)</th><th>CVT ($)</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>10</td><td>3,000</td></tr><tr><td>2</td><td>25</td><td>6,000</td></tr><tr><td>3</td><td>45</td><td>9,000</td></tr><tr><td>4</td><td>60</td><td>12,000</td></tr><tr><td>5</td><td>70</td><td>15,000</td></tr><tr><td>6</td><td>75</td><td>18,000</td></tr></tbody></table></div><p class="note">CFT = $12,000 mensuales. Costo por unidad de trabajo w = $3,000.</p></article>
+        <article class="panel"><h3>Fórmulas económicas</h3><div class="formula"><b>Costo total</b><code>CT = CFT + CVT</code></div><div class="formula"><b>Costo fijo medio</b><code>CFM = CFT / Q</code></div><div class="formula"><b>Costo variable medio</b><code>CVM = CVT / Q</code></div><div class="formula"><b>Costo total medio</b><code>CTM = CT / Q</code></div><div class="formula"><b>Costo marginal</b><code>CMg = ΔCT / ΔQ</code></div><div class="formula"><b>Productividad marginal</b><code>PMgL = ΔQ / ΔL</code></div><div class="formula"><b>Productividad media</b><code>PMeL = Q / L</code></div><div class="formula"><b>Costo total LP</b><code>CTLP = CMeLP × Q</code></div></article>
+        <article class="panel"><h3>Regla de decisión de corto plazo</h3><div class="decision danger"><b>P &lt; CVM · Cierre temporal</b><p>El precio no cubre el costo variable medio.</p></div><div class="decision warning"><b>CVM ≤ P &lt; CTM · Operar con pérdidas</b><p>Se cubren los costos variables y parte de los fijos.</p></div><div class="decision success"><b>P ≥ CTM · Cubrir todos los costos</b><p>Si P = CTM, el beneficio económico es cero; si P &gt; CTM, hay ganancia.</p></div></article>
+        <article class="panel"><h3>Supuestos y límites</h3><p>Q se expresa en miles de transacciones. Los costos son dólares mensuales y los costos medios se expresan por mil transacciones. Para Q intermedio, CVT se estima mediante interpolación lineal y se marca como ESTIMADO. El corto plazo solo se calcula entre Q = 0 y Q = 75 mil. Con Q = 0, los costos medios no están definidos. No se incluyen costos de migración ni cotizaciones reales de proveedores.</p></article>
+      </div>
+      <article class="panel"><h3>Referencias de apoyo</h3><p>Mankiw, N. G. (2012). <i>Principles of economics</i> (6.ª ed.). Cengage Learning.</p><p>Newman, S. (2021). <i>Building microservices: Designing fine-grained systems</i> (2.ª ed.). O'Reilly Media.</p><p>Pindyck, R. S., &amp; Rubinfeld, D. L. (2013). <i>Microeconomía</i> (8.ª ed.). Pearson.</p><p>The Kubernetes Authors. (s. f.). <i>Kubernetes documentation</i>. https://kubernetes.io/docs/</p><p>FinOps Foundation. (s. f.). <i>What is FinOps?</i> https://www.finops.org/introduction/what-is-finops/</p><p class="note">Verifica que las ediciones, años y fuentes correspondan al material que el equipo consultó realmente.</p></article>
+    </section>
+    <footer class="footer"><span>TechCost Business Simulator · CloudScale Inc.</span><span>Modelo académico · 2026</span></footer>
+  </main>
+</body>
+</html>
